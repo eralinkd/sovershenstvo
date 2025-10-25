@@ -1,0 +1,44 @@
+name: CI/CD for Sovershenstvo (no Docker)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Nuxt app
+        run: npm run build
+
+      - name: Archive build
+        run: tar -czf build.tar.gz .output
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        run: |
+          scp -i ~/.ssh/id_rsa build.tar.gz ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/tmp/build.tar.gz
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+            mkdir -p ${{ secrets.SERVER_PATH }}
+            cd ${{ secrets.SERVER_PATH }}
+            rm -rf .output
+            tar -xzf /tmp/build.tar.gz -C ${{ secrets.SERVER_PATH }}
+            rm /tmp/build.tar.gz
+            pm2 stop nuxt-app || true
+            pm2 start .output/server/index.mjs --name nuxt-app
+            pm2 save
+          EOF
