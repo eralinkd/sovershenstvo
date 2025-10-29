@@ -2,7 +2,7 @@ title: Наша команда
 slider:
   title: Наши врачи
   doctor1:
-    name: Калашников Денис Анатольевич
+    name: Денис Анатольевич Калашников
     role: хирург-имплантолог и ортопед, ведущий специалист сети клиник «Совершенство». Стаж работы 22 года.
     photo: /images/doctors-slider/doctors/1.jpg
     about:
@@ -41,7 +41,7 @@ slider:
       l10: ''
   doctor3:
     name: Светлана Владимировна Фокина
-    role: Врач-стоматолог-терапевт
+    role: Врач стоматолог-терапевт
     photo: /images/doctors-slider/doctors/3.jpg
     about:
       - title: 'Направления деятельности:'
