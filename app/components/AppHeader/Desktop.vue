@@ -25,9 +25,9 @@
               <div class="info-label">Телефон</div>
               <div class="info-content">
                 <AppHeaderIconsPhone />
-                <span class="gray">+7 (8412) </span>95-10-49
+                <span class="gray">+7 (8412) </span>25-00-02
                 <div class="separator"></div>
-                <span class="gray">+7 (8412) </span>20 38 78
+                <span class="gray">+7 (8412) </span>95-10-49
               </div>
             </div>
 
