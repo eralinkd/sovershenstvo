@@ -24,12 +24,22 @@
         <div class="form-subtitle">Запишитесь на бесплатную консультацию прямо сейчас</div>
         <div class="form-text">Заполните форму и с вами свяжется администратор клиники</div>
         <div class="inputs">
-          <input class="input" type="text" placeholder="Ваше имя:" />
-          <input class="input" type="text" placeholder="Ваш телефон:" />
+          <input v-model="formData.fullName" class="input" type="text" placeholder="Ваше имя:" />
+          <input
+            v-model="formData.phoneNumber"
+            class="input"
+            type="tel"
+            placeholder="Ваш телефон:"
+          />
         </div>
         <div class="controls">
           <div class="consent">
-            <input id="faqm-consent" type="checkbox" class="consent-input" />
+            <input
+              id="faqm-consent"
+              v-model="isConsentGiven"
+              type="checkbox"
+              class="consent-input"
+            />
             <label for="faqm-consent" class="consent-label">
               <span class="consent-box"></span>
               <span class="consent-text">
@@ -40,7 +50,9 @@
               </span>
             </label>
           </div>
-          <button class="controls-btn" @click="handleSubmit">Записаться на прием</button>
+          <button class="controls-btn" :disabled="isSubmitting" @click="handleSubmit">
+            {{ isSubmitting ? 'Отправка...' : 'Записаться на прием' }}
+          </button>
         </div>
       </div>
     </div>
@@ -82,15 +94,52 @@
 </template>
 
 <script setup>
+import { computed, ref } from 'vue'
+import { api } from '@/api'
 import { useFaq } from '@/composables/content/useFaq'
 
 const showSuccessNotification = ref(false)
+const isConsentGiven = ref(false)
+const isSubmitting = ref(false)
 
-function handleSubmit() {
-  showSuccessNotification.value = true
-  setTimeout(() => {
-    showSuccessNotification.value = false
-  }, 3000)
+const formData = ref({
+  fullName: '',
+  phoneNumber: '',
+})
+
+async function handleSubmit() {
+  if (!isConsentGiven.value || isSubmitting.value) return
+
+  // Валидация
+  if (!formData.value.fullName.trim() || !formData.value.phoneNumber.trim()) {
+    alert('Пожалуйста, заполните все поля')
+    return
+  }
+
+  isSubmitting.value = true
+
+  try {
+    await api.pushWebsiteQuestionnaire({
+      phoneNumber: formData.value.phoneNumber,
+      fullName: formData.value.fullName,
+    })
+
+    showSuccessNotification.value = true
+
+    // Очистка формы
+    formData.value.fullName = ''
+    formData.value.phoneNumber = ''
+    isConsentGiven.value = false
+
+    setTimeout(() => {
+      showSuccessNotification.value = false
+    }, 3000)
+  } catch (error) {
+    console.error('Ошибка отправки формы:', error)
+    alert('Произошла ошибка при отправке. Попробуйте позже.')
+  } finally {
+    isSubmitting.value = false
+  }
 }
 
 const props = defineProps({
@@ -266,6 +315,18 @@ function toggle(index) {
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.controls-btn:hover:not(:disabled) {
+  background: #e6e6e6;
+}
+
+.controls-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .consent {

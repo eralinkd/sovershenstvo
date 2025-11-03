@@ -7,12 +7,17 @@
           <div class="subtitle">Заполните форму и с вами свяжется администратор клиники</div>
 
           <div class="inputs">
-            <input class="input" type="text" placeholder="Ваше имя:" />
-            <input class="input" type="text" placeholder="Ваш телефон:" />
+            <input v-model="formData.fullName" class="input" type="text" placeholder="Ваше имя:" />
+            <input
+              v-model="formData.phoneNumber"
+              class="input"
+              type="tel"
+              placeholder="Ваш телефон:"
+            />
           </div>
 
           <label class="consent">
-            <input type="checkbox" class="consent-input" />
+            <input v-model="isConsentGiven" type="checkbox" class="consent-input" />
             <span class="consent-box"></span>
             <span class="consent-text">
               Я согласен с
@@ -20,7 +25,9 @@
             </span>
           </label>
 
-          <button class="submit-btn" @click="handleSubmit">Записаться на прием</button>
+          <button class="submit-btn" :disabled="isSubmitting" @click="handleSubmit">
+            {{ isSubmitting ? 'Отправка...' : 'Записаться на прием' }}
+          </button>
         </div>
 
         <div class="form-image-wrap">
@@ -66,13 +73,51 @@
 </template>
 
 <script setup>
-const showSuccessNotification = ref(false)
+import { ref } from 'vue'
+import { api } from '@/api'
 
-function handleSubmit() {
-  showSuccessNotification.value = true
-  setTimeout(() => {
-    showSuccessNotification.value = false
-  }, 3000)
+const showSuccessNotification = ref(false)
+const isConsentGiven = ref(false)
+const isSubmitting = ref(false)
+
+const formData = ref({
+  fullName: '',
+  phoneNumber: '',
+})
+
+async function handleSubmit() {
+  if (!isConsentGiven.value || isSubmitting.value) return
+
+  // Валидация
+  if (!formData.value.fullName.trim() || !formData.value.phoneNumber.trim()) {
+    alert('Пожалуйста, заполните все поля')
+    return
+  }
+
+  isSubmitting.value = true
+
+  try {
+    await api.pushWebsiteQuestionnaire({
+      phoneNumber: formData.value.phoneNumber,
+      fullName: formData.value.fullName,
+    })
+
+    showSuccessNotification.value = true
+
+    // Очистка формы
+    formData.value.fullName = ''
+    formData.value.phoneNumber = ''
+    isConsentGiven.value = false
+
+    setTimeout(() => {
+      showSuccessNotification.value = false
+    }, 3000)
+  } catch (error) {
+    console.error('Ошибка отправки формы:', error)
+    alert('Произошла ошибка при отправке. Попробуйте позже.')
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 
@@ -222,8 +267,14 @@ function handleSubmit() {
   transition: background 0.3s ease;
 }
 
-.submit-btn:hover {
+.submit-btn:hover:not(:disabled) {
   background: #0056cc;
+}
+
+.submit-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 @media (min-width: 992px) {
