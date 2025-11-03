@@ -1,5 +1,5 @@
 const API_BASE_URL = 'https://api.unyto.ru:8443'
-const SITE_TOKEN = 'stomatologpnz'
+const SITE_TOKEN = '184df047-2563-4.228-bbc0-61d8cc528bfd'
 
 export const api = {
   async pushWebsiteQuestionnaire(websiteQuestionnaire) {
