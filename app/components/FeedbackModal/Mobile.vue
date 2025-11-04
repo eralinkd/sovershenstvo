@@ -41,6 +41,7 @@
                 class="input"
                 type="tel"
                 placeholder="Ваш телефон:"
+                @input="handlePhoneInput"
               />
             </div>
             <div class="controls">
@@ -123,6 +124,38 @@ const formData = ref({
   fullName: '',
   phoneNumber: '',
 })
+
+function handlePhoneInput(event) {
+  let value = event.target.value
+  
+  // Удаляем все символы кроме цифр, + и пробелов
+  value = value.replace(/[^\d+\s]/g, '')
+  
+  // Подсчитываем количество символов без пробелов
+  const valueWithoutSpaces = value.replace(/\s/g, '')
+  
+  // Ограничиваем до 12 символов (без учета пробелов) для формата +7XXXXXXXXXX
+  if (valueWithoutSpaces.length > 12) {
+    value = value.slice(0, value.length - (valueWithoutSpaces.length - 12))
+  }
+  
+  // Проверяем, что номер начинается правильно (только +7 или 7 или 8)
+  if (valueWithoutSpaces.length > 0) {
+    const firstChar = valueWithoutSpaces[0]
+    if (firstChar === '8') {
+      // Заменяем 8 на +7
+      value = '+7' + value.slice(1)
+    } else if (firstChar === '7' && valueWithoutSpaces[1] !== undefined) {
+      // Если начинается с 7, добавляем +
+      value = '+' + value
+    } else if (firstChar !== '+' && firstChar !== '7') {
+      // Если начинается не с +, 7 или 8, добавляем +7
+      value = '+7' + value
+    }
+  }
+  
+  formData.value.phoneNumber = value
+}
 
 function handleClose() {
   emit('close')
