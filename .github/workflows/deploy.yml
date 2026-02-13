@@ -19,6 +19,7 @@ jobs:
           tar --exclude=node_modules \
             --exclude=.git \
             --exclude=.output \
+            --exclude=dist \
             -czf dist/app.tar.gz .
 
       - name: Setup SSH
