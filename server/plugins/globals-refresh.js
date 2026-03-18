@@ -5,6 +5,7 @@ import { refreshMainFromDb, startMainRefresh } from '../utils/main-store'
 import { refreshPricingFromDb, startPricingRefresh } from '../utils/pricing-store'
 
 export default defineNitroPlugin(() => {
+  console.log('DATABASE_URL starts with:', process.env.DATABASE_URL?.slice(0, 20))
   Promise.all([
     refreshGlobalsFromDb(),
     refreshFaqFromDb(),
