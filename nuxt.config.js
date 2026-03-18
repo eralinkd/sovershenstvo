@@ -17,10 +17,6 @@ export default defineNuxtConfig({
 
   modules: ['@nuxt/ui', '@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@nuxt/fonts'],
 
-  nitro: {
-    preset: 'vercel',
-  },
-
   image: {
     quality: 80,
     format: ['webp'],

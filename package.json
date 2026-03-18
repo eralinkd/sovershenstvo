@@ -22,7 +22,6 @@
     "@nuxt/image": "^1.11.0",
     "@nuxt/ui": "^4.5.1",
     "@prisma/client": "^6.17.1",
-    "better-sqlite3": "^12.2.0",
     "eslint": "^9.34.0",
     "js-yaml": "^4.1.0",
     "nuxt": "^4.1.0",
