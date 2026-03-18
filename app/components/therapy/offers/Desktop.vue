@@ -39,7 +39,7 @@ const icons = {
   5: TherapyOffersIconsSecond,
 }
 
-const items = await useOffers()
+const items = useOffers()
 </script>
 
 <style scoped>

@@ -1,6 +1,11 @@
 <template>
-  <OffersBiteCorrectionHeroDesktop v-if="!isMobile" />
-  <OffersBiteCorrectionHeroMobile v-else />
+  <ClientOnly>
+    <OffersBiteCorrectionHeroDesktop v-if="!isMobile" />
+    <OffersBiteCorrectionHeroMobile v-else />
+    <template #fallback>
+      <OffersBiteCorrectionHeroDesktop />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>

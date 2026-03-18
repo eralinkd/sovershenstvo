@@ -1,11 +1,21 @@
 <template>
-  <PriceTableDesktop
-    v-if="!isMobile"
-    :data="data"
-    :is-collapsed="isCollapsed"
-    :visible-count="visibleCount"
-  />
-  <PriceTableMobile v-else :data="data" :is-collapsed="isCollapsed" :visible-count="visibleCount" />
+  <ClientOnly>
+    <PriceTableDesktop
+      v-if="!isMobile"
+      :data="data"
+      :is-collapsed="isCollapsed"
+      :visible-count="visibleCount"
+    />
+    <PriceTableMobile
+      v-else
+      :data="data"
+      :is-collapsed="isCollapsed"
+      :visible-count="visibleCount"
+    />
+    <template #fallback>
+      <PriceTableDesktop :data="data" :is-collapsed="isCollapsed" :visible-count="visibleCount" />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>

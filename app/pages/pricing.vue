@@ -3,7 +3,6 @@
     <AppHeader />
     <main>
       <AppBreadcrumbs :path="breadcrumbs" />
-      <PricingHero v-if="!isMobile" />
       <PriceTable :data="pricingData" />
       <MainUnique />
       <AboutMission />
@@ -20,5 +19,5 @@ const breadcrumbs = [
   { path: '/pricing', name: 'Стоимость услуг' },
 ]
 
-const pricingData = await usePriceTable()
+const pricingData = usePriceTable()
 </script>

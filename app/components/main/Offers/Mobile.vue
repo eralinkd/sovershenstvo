@@ -33,7 +33,7 @@
         >
           <SwiperSlide>
             <article class="offer-card image-card" @click="openFeedbackModal">
-              <img class="card-image" :src="mainData?.offers?.banner1?.img" alt="Offer" />
+              <NuxtImg class="card-image" :src="mainData?.offers?.banner1?.img" alt="Offer" />
               <div class="card-content on-image">
                 <div class="badge">Акция</div>
                 <div class="card-text">
@@ -49,7 +49,7 @@
           </SwiperSlide>
           <SwiperSlide>
             <article class="offer-card image-card" @click="openFeedbackModal">
-              <img class="card-image" :src="mainData?.offers?.banner2?.img" alt="Offer" />
+              <NuxtImg class="card-image" :src="mainData?.offers?.banner2?.img" alt="Offer" />
               <div class="card-content on-image">
                 <div class="badge">Акция</div>
                 <div class="card-text">
@@ -124,7 +124,7 @@ defineProps({
     default: false,
   },
 })
-const mainData = await useMain()
+const mainData = useMain()
 
 function onSwiper(instance) {
   swiperInstance = instance

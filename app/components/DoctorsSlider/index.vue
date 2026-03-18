@@ -1,6 +1,11 @@
 <template>
-  <DoctorsSliderDesktop v-if="!isMobile" :is-doctors-page="isDoctorsPage" />
-  <DoctorsSliderMobile v-else :is-doctors-page="isDoctorsPage" />
+  <ClientOnly>
+    <DoctorsSliderDesktop v-if="!isMobile" :is-doctors-page="isDoctorsPage" />
+    <DoctorsSliderMobile v-else :is-doctors-page="isDoctorsPage" />
+    <template #fallback>
+      <DoctorsSliderDesktop :is-doctors-page="isDoctorsPage" />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>

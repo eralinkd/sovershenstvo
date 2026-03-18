@@ -46,7 +46,7 @@ function leaveReview() {
   window.open('https://yandex.ru/profile/1050283619?lang=ru', '_blank')
 }
 
-const reviews = await useReviewsContent()
+const reviews = useReviewsContent()
 
 function escapeHtml(str) {
   return String(str)

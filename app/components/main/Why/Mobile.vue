@@ -59,7 +59,7 @@ import MainWhyIconsComfort from './Icons/comfort.vue'
 import MainWhyIconsPrice from './Icons/price.vue'
 import MainWhyIconsTechnologies from './Icons/technologies.vue'
 
-const mainData = await useMain()
+const mainData = useMain()
 
 const modules = [Keyboard, Mousewheel, FreeMode]
 let swiperInstance = null

@@ -1,6 +1,10 @@
+import { createResolver } from 'nuxt/kit'
+
+const { resolve } = createResolver(import.meta.url)
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   app: {
     head: {
       title: 'Совершенство — ваша стоматология',
@@ -9,9 +13,21 @@ export default defineNuxtConfig({
   htmlAttrs: {
     lang: 'ru',
   },
-  css: ['../assets/css/index.css'],
+  css: [resolve('./assets/css/main.css')],
 
-  modules: ['@nuxt/content', '@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@nuxt/fonts'],
+  modules: ['@nuxt/ui', '@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@nuxt/fonts'],
+
+  image: {
+    quality: 80,
+    format: ['webp'],
+    densities: [1],
+  },
+
+  colorMode: {
+    preference: 'light',
+    fallback: 'light',
+    dataValue: 'light',
+  },
 
   fonts: {
     families: [

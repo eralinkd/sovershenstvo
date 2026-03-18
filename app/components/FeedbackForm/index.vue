@@ -1,6 +1,11 @@
 <template>
-  <FeedbackFormDesktop v-if="!isMobile" />
-  <FeedbackFormMobile v-else />
+  <ClientOnly>
+    <FeedbackFormDesktop v-if="!isMobile" />
+    <FeedbackFormMobile v-else />
+    <template #fallback>
+      <FeedbackFormDesktop />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>

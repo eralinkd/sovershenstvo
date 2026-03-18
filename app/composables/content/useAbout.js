@@ -1,13 +1,10 @@
-export const useAbout = async () => {
-  const { data } = await useAsyncData('about', async () => {
-    return queryCollection('about').first()
-  })
+import { about as aboutData } from '~/data/content'
 
-  const body = data?.value?.meta?.body || {}
-
+export const useAbout = () => {
+  const body = aboutData || {}
   const hero = body?.hero || {}
 
-  const result = {
+  return computed(() => ({
     hero: {
       quote: hero?.quote,
       quoteAuthor: hero?.quoteAuthor,
@@ -26,7 +23,5 @@ export const useAbout = async () => {
       ctaText: hero?.ctaText,
     },
     mission: body?.mission || {},
-  }
-
-  return result
+  }))
 }

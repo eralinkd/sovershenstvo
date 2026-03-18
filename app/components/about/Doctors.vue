@@ -4,7 +4,7 @@
       <h2 class="doctors-title">Наши врачи помогут</h2>
       <div class="grid">
         <div class="img">
-          <img src="/images/page-about/doctors.png" alt="Doctor" />
+          <NuxtImg src="/images/page-about/doctors.png" alt="Doctor" />
         </div>
         <div class="block">
           <div class="items">

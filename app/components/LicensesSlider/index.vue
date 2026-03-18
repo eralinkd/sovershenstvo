@@ -1,6 +1,11 @@
 <template>
-  <LicensesSliderDesktop v-if="!isMobile" />
-  <LicensesSliderMobile v-else />
+  <ClientOnly>
+    <LicensesSliderDesktop v-if="!isMobile" />
+    <LicensesSliderMobile v-else />
+    <template #fallback>
+      <LicensesSliderDesktop />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>

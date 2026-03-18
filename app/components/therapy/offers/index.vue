@@ -1,6 +1,11 @@
 <template>
-  <TherapyOffersDesktop v-if="!isMobile" />
-  <TherapyOffersMobile v-else />
+  <ClientOnly>
+    <TherapyOffersDesktop v-if="!isMobile" />
+    <TherapyOffersMobile v-else />
+    <template #fallback>
+      <TherapyOffersDesktop />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>

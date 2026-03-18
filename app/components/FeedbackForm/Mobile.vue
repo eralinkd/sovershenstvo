@@ -32,7 +32,7 @@
         </div>
 
         <div class="form-image-wrap">
-          <img src="/images/feedback-form.png" alt="feedbackForm" class="form-image" />
+          <NuxtImg src="/images/feedback-form.png" alt="feedbackForm" class="form-image" />
         </div>
       </div>
     </div>

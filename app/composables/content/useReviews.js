@@ -1,9 +1,7 @@
-export const useReviews = async () => {
-  const { data } = await useAsyncData('reviews-list', async () => {
-    return queryCollection('reviews').first()
-  })
+import { reviews as reviewsData } from '~/data/content'
 
-  const list = data?.value?.meta?.body?.list || {}
+export const useReviews = () => {
+  const list = reviewsData?.list || {}
 
   const entries = Object.entries(list)
     .filter(([key, val]) => key.startsWith('review') && val)
@@ -28,8 +26,9 @@ export const useReviews = async () => {
     text: r?.text || '',
   }))
 
-  // Exclude empty reviews: missing author OR missing text
-  return reviews.filter(
-    (rev) => String(rev.author).trim().length > 0 && String(rev.text).trim().length > 0,
+  return computed(() =>
+    reviews.filter(
+      (rev) => String(rev.author).trim().length > 0 && String(rev.text).trim().length > 0,
+    ),
   )
 }

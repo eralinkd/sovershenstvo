@@ -1,0 +1,8 @@
+@import 'tailwindcss';
+@source "../../app/**/*.{vue,js,ts,jsx,tsx}";
+@source "../../server/**/*.{vue,js,ts,jsx,tsx}";
+
+@import '@nuxt/ui';
+
+/* Кастомные стили сайта */
+@import './index.css';

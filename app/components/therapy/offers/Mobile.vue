@@ -79,7 +79,7 @@ const icons = {
   5: TherapyOffersIconsSecond,
 }
 
-const items = await useOffers()
+const items = useOffers()
 
 function onSwiper(instance) {
   swiperInstance = instance

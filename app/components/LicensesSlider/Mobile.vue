@@ -34,7 +34,7 @@
           <SwiperSlide v-for="(src, index) in images" :key="index">
             <article class="slide">
               <div class="image-wrap">
-                <img :src="src" alt="Лицензия" class="image" loading="lazy" />
+                <NuxtImg :src="src" alt="Лицензия" class="image" loading="lazy" />
               </div>
             </article>
           </SwiperSlide>

@@ -1,6 +1,11 @@
 <template>
-  <PromotionsHeroDesktop v-if="!isMobile" />
-  <PromotionsHeroMobile v-else />
+  <ClientOnly>
+    <PromotionsHeroDesktop v-if="!isMobile" />
+    <PromotionsHeroMobile v-else />
+    <template #fallback>
+      <PromotionsHeroDesktop />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>

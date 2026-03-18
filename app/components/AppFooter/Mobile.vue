@@ -17,7 +17,7 @@
           </div>
         </div>
 
-        <div class="map-image"><img src="/images/footer-map.png" alt="map" /></div>
+        <div class="map-image"><NuxtImg src="/images/footer-map.png" alt="map" /></div>
 
         <div class="contacts">
           <div class="col">
@@ -68,7 +68,7 @@
         <div class="line"></div>
 
         <div class="nav">
-          <img src="/images/footer-logo.png" alt="logo" class="logo" />
+          <NuxtImg src="/images/footer-logo.png" alt="logo" class="logo" />
           <div class="links">
             <NuxtLink to="/">Главная</NuxtLink>
             <NuxtLink to="/offers">Услуги</NuxtLink>
@@ -96,10 +96,10 @@
 import { useFooter } from '@/composables/content/useFooter'
 
 const selectedAddress = ref(1)
-const footer = await useFooter()
-const summaryPhonesString = computed(() => footer.summaryPhones || '')
+const footer = useFooter()
+const summaryPhonesString = computed(() => footer.value?.summaryPhones || '')
 const currentIndex = computed(() => Math.max(0, (selectedAddress.value || 1) - 1))
-const currentAddress = computed(() => (footer.addresses || [])[currentIndex.value] || {})
+const currentAddress = computed(() => (footer.value?.addresses || [])[currentIndex.value] || {})
 const currentPhones = computed(() =>
   Array.isArray(currentAddress.value.phones) ? currentAddress.value.phones.filter(Boolean) : [],
 )

@@ -2,7 +2,7 @@
   <section class="feedback-form">
     <div class="container">
       <div class="form">
-        <img src="/images/feedback-form.png" alt="feedbackForm" class="form-image" />
+        <NuxtImg src="/images/feedback-form.png" alt="feedbackForm" class="form-image" />
         <h2 class="title">
           Запишитесь на бесплатную <br />
           консультацию прямо сейчас

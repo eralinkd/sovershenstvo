@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { useMain } from '@/composables/content/useMain'
+import { useMain } from '~/composables/content/useMain'
 
-const mainData = await useMain()
+const mainData = useMain()
 </script>

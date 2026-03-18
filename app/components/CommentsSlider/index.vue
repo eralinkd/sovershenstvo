@@ -1,6 +1,11 @@
 <template>
-  <CommentsSliderDesktop v-if="!isMobile" :comments="comments" />
-  <CommentsSliderMobile v-else :comments="comments" />
+  <ClientOnly>
+    <CommentsSliderDesktop v-if="!isMobile" :comments="comments" />
+    <CommentsSliderMobile v-else :comments="comments" />
+    <template #fallback>
+      <CommentsSliderDesktop :comments="comments" />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>

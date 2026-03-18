@@ -6,7 +6,7 @@
           <div class="header-separator"></div>
           <div class="header-logo">
             <NuxtLink to="/">
-              <img src="/images/header-logo.png" alt="Логотип" />
+              <NuxtImg src="/images/header-logo.png" alt="Логотип" />
             </NuxtLink>
           </div>
 

@@ -1,6 +1,11 @@
 <template>
-  <MainWhyDesktop v-if="!isMobile" />
-  <MainWhyMobile v-else />
+  <ClientOnly>
+    <MainWhyDesktop v-if="!isMobile" />
+    <MainWhyMobile v-else />
+    <template #fallback>
+      <MainWhyDesktop />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>

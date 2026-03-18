@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Globals {
+  id               String   @id @default(cuid())
+  title            String   @default("")
+  seoDescription   String?  @map("seo_description")
+  seoOgTitle       String?  @map("seo_og_title")
+  seoOgDescription String?  @map("seo_og_description")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@map("globals")
+}
+
+model Faq {
+  id        String    @id @default(cuid())
+  title     String    @default("")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  items     FaqItem[]
+
+  @@map("faq")
+}
+
+model FaqItem {
+  id       String  @id @default(cuid())
+  faqId    String  @map("faq_id")
+  question String  @default("")
+  answer   String  @default("")
+  sortOrder Int    @default(0) @map("sort_order")
+  faq      Faq     @relation(fields: [faqId], references: [id], onDelete: Cascade)
+
+  @@map("faq_item")
+}
+
+model Footer {
+  id            String           @id @default(cuid())
+  title         String           @default("")
+  subtitle      String?          @default("")
+  city          String?          @default("")
+  email         String?          @default("")
+  summaryPhones String?          @map("summary_phones")
+  createdAt     DateTime         @default(now()) @map("created_at")
+  updatedAt     DateTime         @updatedAt @map("updated_at")
+  addresses     FooterAddress[]
+
+  @@map("footer")
+}
+
+model FooterAddress {
+  id      String  @id @default(cuid())
+  footerId String @map("footer_id")
+  label   String  @default("")
+  phone1  String? @default("")
+  phone2  String? @default("")
+  phone3  String? @default("")
+  sortOrder Int   @default(0) @map("sort_order")
+  footer  Footer @relation(fields: [footerId], references: [id], onDelete: Cascade)
+
+  @@map("footer_address")
+}
+
+model Main {
+  id        String   @id @default(cuid())
+  data      Json     @default("{}")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("main")
+}
+
+model Pricing {
+  id        String   @id @default(cuid())
+  data      Json     @default("{}")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("pricing")
+}

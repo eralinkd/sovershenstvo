@@ -1,21 +1,19 @@
-export const usePromotions = async () => {
-  const { data } = await useAsyncData('promotions', async () => {
-    return queryCollection('promotions').first()
-  })
+import { promotions as promotionsData } from '~/data/content'
 
-  const body = data?.value?.meta?.body || {}
+export const usePromotions = () => {
+  const body = promotionsData || {}
   const hero = body?.hero || {}
 
   const items = [hero?.items?.item1, hero?.items?.item2, hero?.items?.item3]
     .map((it) => it?.text)
     .filter(Boolean)
 
-  return {
+  return computed(() => ({
     hero: {
       title: hero?.title,
       subtitle: hero?.subtitle,
       items,
       img: hero?.img,
     },
-  }
+  }))
 }

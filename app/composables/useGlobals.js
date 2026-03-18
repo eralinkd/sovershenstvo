@@ -1,6 +1,6 @@
-export const useGlobals = async () => {
-  const { data } = await useAsyncData('globals', () => {
-    return queryCollection('globals').first()
+export const useGlobals = () => {
+  const { data } = useFetch('/api/content/globals', {
+    key: 'globals',
   })
-  return data
+  return computed(() => data.value ?? { meta: { title: '', seo: {} } })
 }

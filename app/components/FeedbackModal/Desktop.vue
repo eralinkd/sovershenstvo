@@ -13,7 +13,7 @@
         @click.self="handleClose"
       >
         <div class="modal-content">
-          <img src="/images/feedback-modal.png" alt="feedbackModal" class="modal-image" />
+          <NuxtImg src="/images/feedback-modal.png" alt="feedbackModal" class="modal-image" />
           <div class="title">
             Получите специальное <br />
             предложение

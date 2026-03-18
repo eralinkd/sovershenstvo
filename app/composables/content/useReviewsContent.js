@@ -1,21 +1,19 @@
-export const useReviewsContent = async () => {
-  const { data } = await useAsyncData('reviews-content', async () => {
-    return queryCollection('reviews').first()
-  })
+import { reviews as reviewsData } from '~/data/content'
 
-  const body = data?.value?.meta?.body || {}
+export const useReviewsContent = () => {
+  const body = reviewsData || {}
   const hero = body?.hero || {}
 
   const items = [hero?.items?.item1, hero?.items?.item2, hero?.items?.item3]
     .map((it) => it?.text)
     .filter(Boolean)
 
-  return {
+  return computed(() => ({
     hero: {
       title: hero?.title,
       subtitle: hero?.subtitle,
       items,
       img: hero?.img,
     },
-  }
+  }))
 }

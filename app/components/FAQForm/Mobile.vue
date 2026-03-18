@@ -186,16 +186,26 @@ const props = defineProps({
   },
 })
 
-const faqData = await useFaq()
-const resolvedTitle = computed(() => props.title || faqData.title)
-const sourceItems = computed(() => (props.faqs && props.faqs.length ? props.faqs : faqData.items))
+const faqData = useFaq()
+const resolvedTitle = computed(() => props.title || faqData.value?.title)
+const sourceItems = computed(() =>
+  props.faqs && props.faqs.length ? props.faqs : faqData.value?.items ?? [],
+)
 const items = ref(
-  sourceItems.value.map((i) => ({
+  (sourceItems.value || []).map((i) => ({
     question: i.question,
     answer: i.answer,
     open: Boolean(i.open),
   })),
 )
+
+watch(sourceItems, (newItems) => {
+  items.value = (newItems || []).map((i) => ({
+    question: i.question,
+    answer: i.answer,
+    open: Boolean(i.open),
+  }))
+})
 
 function toggle(index) {
   items.value[index].open = !items.value[index].open

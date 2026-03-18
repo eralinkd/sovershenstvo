@@ -1,9 +1,7 @@
-export const useOffers = async () => {
-  const { data } = await useAsyncData('offers', async () => {
-    return queryCollection('offers').first()
-  })
+import { offers as offersData } from '~/data/content'
 
-  const list = data?.value?.meta?.body?.list || {}
+export const useOffers = () => {
+  const list = offersData?.list || {}
 
   const entries = Object.entries(list)
     .filter(([key, val]) => key.startsWith('item') && val)
@@ -13,10 +11,12 @@ export const useOffers = async () => {
       return na - nb
     })
 
-  return entries.map(([, it]) => ({
-    topic: it?.topic || '',
-    text: it?.text || '',
-    price: it?.price || '',
-    link: it?.link || '/',
-  }))
+  return computed(() =>
+    entries.map(([, it]) => ({
+      topic: it?.topic || '',
+      text: it?.text || '',
+      price: it?.price || '',
+      link: it?.link || '/',
+    })),
+  )
 }

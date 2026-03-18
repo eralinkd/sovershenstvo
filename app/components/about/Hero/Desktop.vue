@@ -10,7 +10,7 @@
           <AboutHeroIconsQuotes class="quotes" />
         </div>
         <div class="img">
-          <img :src="about.hero.topImage" alt="about" />
+          <NuxtImg :src="about.hero.topImage" alt="about" />
         </div>
         <div class="block bottom">
           <div class="text">
@@ -46,7 +46,7 @@ function openFeedbackModal() {
   open()
 }
 
-const about = await useAbout()
+const about = useAbout()
 
 function escapeHtml(str) {
   return String(str)

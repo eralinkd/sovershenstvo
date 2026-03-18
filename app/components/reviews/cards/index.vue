@@ -42,7 +42,7 @@
 <script setup>
 import UserIcon from './user.vue'
 
-const reviews = await useReviews()
+const reviews = useReviews()
 
 // Build filter options
 const serviceSet = new Map()

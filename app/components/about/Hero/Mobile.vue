@@ -2,7 +2,7 @@
   <section class="about-mobile">
     <div class="container">
       <div class="image-wrap">
-        <img :src="about.hero.topImage" alt="about" />
+        <NuxtImg :src="about.hero.topImage" alt="about" />
       </div>
 
       <div class="card top">
@@ -43,7 +43,7 @@ function openFeedbackModal() {
   open()
 }
 
-const about = await useAbout()
+const about = useAbout()
 
 function escapeHtml(str) {
   return String(str)

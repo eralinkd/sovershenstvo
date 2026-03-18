@@ -1,6 +1,8 @@
 <template>
-  <FeedbackModalDesktop v-if="!isMobile" />
-  <FeedbackModalMobile v-else />
+  <ClientOnly>
+    <FeedbackModalDesktop v-if="!isMobile" />
+    <FeedbackModalMobile v-else />
+  </ClientOnly>
 </template>
 
 <script setup>

@@ -112,7 +112,7 @@ function openFeedbackModal() {
 
 const modules = [Keyboard, Mousewheel, FreeMode]
 
-const doctorsData = await useDoctors()
+const doctorsData = useDoctors()
 const activeDoctors = doctorsData?.slider?.doctors || []
 
 const _doctors = [

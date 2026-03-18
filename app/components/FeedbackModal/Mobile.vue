@@ -67,7 +67,7 @@
               </button>
             </div>
           </div>
-          <img src="/images/feedback-modal.png" alt="feedbackModal" class="modal-image" />
+          <NuxtImg src="/images/feedback-modal.png" alt="feedbackModal" class="modal-image" />
         </div>
       </div>
     </Transition>
