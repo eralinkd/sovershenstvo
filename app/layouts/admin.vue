@@ -42,11 +42,11 @@ const navItems = [
   { to: '/admin/footer', label: 'Футер', icon: 'i-lucide-phone' },
   { to: '/admin/images', label: 'Медиатека', icon: 'i-lucide-images' },
   { to: '/admin/pricing', label: 'Прайс-лист', icon: 'i-lucide-dollar-sign' },
-  { to: '/admin/doctors', label: 'Doctors', icon: 'i-lucide-users' },
-  { to: '/admin/about', label: 'About', icon: 'i-lucide-info' },
-  { to: '/admin/offers', label: 'Offers', icon: 'i-lucide-clipboard-list' },
-  { to: '/admin/promotions', label: 'Promotions', icon: 'i-lucide-gift' },
-  { to: '/admin/reviews', label: 'Reviews', icon: 'i-lucide-star' },
+  { to: '/admin/doctors', label: 'Врачи', icon: 'i-lucide-users' },
+  { to: '/admin/about', label: 'О клинике', icon: 'i-lucide-info' },
+  { to: '/admin/offers', label: 'Услуги', icon: 'i-lucide-clipboard-list' },
+  { to: '/admin/promotions', label: 'Акции (стр.)', icon: 'i-lucide-gift' },
+  { to: '/admin/reviews', label: 'Отзывы', icon: 'i-lucide-star' },
 ]
 
 async function logout() {

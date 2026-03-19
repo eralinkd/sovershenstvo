@@ -2,7 +2,7 @@ import { prisma } from '../../../utils/db'
 import { refreshFooterFromDb } from '../../../utils/footer-store'
 
 export default defineEventHandler(async (event) => {
-  // TODO: восстановить проверку авторизации
+
   const body = await readBody(event)
   const title = String(body?.title ?? '').trim()
   const subtitle = String(body?.subtitle ?? '').trim()

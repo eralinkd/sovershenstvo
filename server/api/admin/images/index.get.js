@@ -2,7 +2,7 @@ import { scanAll, findUsages } from '../../../utils/image-manager'
 import { prisma } from '../../../utils/db'
 
 export default defineEventHandler(async () => {
-  // TODO: восстановить проверку авторизации
+
   const { images, folders } = await scanAll()
 
   const imagesWithUsages = await Promise.all(

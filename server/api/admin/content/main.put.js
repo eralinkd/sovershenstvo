@@ -2,7 +2,7 @@ import { prisma } from '../../../utils/db'
 import { refreshMainFromDb } from '../../../utils/main-store'
 
 export default defineEventHandler(async (event) => {
-  // TODO: восстановить проверку авторизации
+
   const body = await readBody(event)
 
   const existing = await prisma.main.findFirst({ orderBy: { updatedAt: 'desc' } })

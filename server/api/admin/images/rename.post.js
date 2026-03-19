@@ -10,7 +10,7 @@ import {
 import { prisma } from '../../../utils/db'
 
 export default defineEventHandler(async (event) => {
-  // TODO: восстановить проверку авторизации
+
   const { id, newName } = await readBody(event)
   if (!id || !newName) throw createError({ statusCode: 400, message: 'id and newName are required' })
 

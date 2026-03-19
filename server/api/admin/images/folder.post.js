@@ -3,7 +3,7 @@ import path from 'node:path'
 import { IMAGES_ROOT, sanitizeName, ensureSafe } from '../../../utils/image-manager'
 
 export default defineEventHandler(async (event) => {
-  // TODO: восстановить проверку авторизации
+
   const { name, parent = '' } = await readBody(event)
   if (!name) throw createError({ statusCode: 400, message: 'name is required' })
 

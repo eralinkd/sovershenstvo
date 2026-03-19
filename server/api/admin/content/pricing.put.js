@@ -2,7 +2,7 @@ import { prisma } from '../../../utils/db'
 import { refreshPricingFromDb } from '../../../utils/pricing-store'
 
 export default defineEventHandler(async (event) => {
-  // TODO: восстановить проверку авторизации
+
   const body = await readBody(event)
 
   const categories = Array.isArray(body?.categories) ? body.categories : []

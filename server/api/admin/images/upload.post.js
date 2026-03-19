@@ -3,7 +3,7 @@ import path from 'node:path'
 import { IMAGES_ROOT, sanitizeName, ensureSafe, isImageFile } from '../../../utils/image-manager'
 
 export default defineEventHandler(async (event) => {
-  // TODO: восстановить проверку авторизации
+
   const form = await readMultipartFormData(event)
   if (!form) throw createError({ statusCode: 400, message: 'No form data' })
 

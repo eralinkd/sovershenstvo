@@ -1,19 +1,14 @@
-import { promotions as promotionsData } from '~/data/content'
-
 export const usePromotions = () => {
-  const body = promotionsData || {}
-  const hero = body?.hero || {}
-
-  const items = [hero?.items?.item1, hero?.items?.item2, hero?.items?.item3]
-    .map((it) => it?.text)
-    .filter(Boolean)
-
-  return computed(() => ({
-    hero: {
-      title: hero?.title,
-      subtitle: hero?.subtitle,
-      items,
-      img: hero?.img,
-    },
-  }))
+  const { data } = useFetch('/api/content/promotions', { key: 'promotions' })
+  return computed(() => {
+    const hero = data.value?.hero ?? {}
+    return {
+      hero: {
+        title: hero.title ?? '',
+        subtitle: hero.subtitle ?? '',
+        items: (hero.items ?? []).map((it) => it?.text).filter(Boolean),
+        img: hero.img ?? '',
+      },
+    }
+  })
 }

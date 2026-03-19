@@ -2,7 +2,7 @@ import { prisma } from '../../../utils/db'
 import { refreshFaqFromDb } from '../../../utils/faq-store'
 
 export default defineEventHandler(async (event) => {
-  // TODO: восстановить проверку авторизации
+
   const body = await readBody(event)
   const title = String(body?.title ?? '').trim()
   const items = Array.isArray(body?.items) ? body.items : []

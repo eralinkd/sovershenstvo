@@ -2,7 +2,7 @@ import { unlink } from 'node:fs/promises'
 import { IMAGES_ROOT, ensureSafe } from '../../../utils/image-manager'
 
 export default defineEventHandler(async (event) => {
-  // TODO: восстановить проверку авторизации
+
   const { id } = await readBody(event)
   if (!id) throw createError({ statusCode: 400, message: 'id is required' })
 

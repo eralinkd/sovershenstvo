@@ -86,7 +86,7 @@ const modules = [Keyboard, Mousewheel, FreeMode]
 let swiperInstance = null
 
 const doctorsData = useDoctors()
-const activeDoctors = doctorsData?.slider?.doctors || []
+const activeDoctors = computed(() => doctorsData.value?.slider?.doctors || [])
 
 function onSwiper(instance) {
   swiperInstance = instance

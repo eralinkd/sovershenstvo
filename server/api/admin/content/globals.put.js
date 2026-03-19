@@ -2,7 +2,7 @@ import { prisma } from '../../../utils/db'
 import { refreshGlobalsFromDb } from '../../../utils/globals-store'
 
 export default defineEventHandler(async (event) => {
-  // TODO: восстановить проверку авторизации
+
   const body = await readBody(event)
   const title = String(body?.title ?? '').trim()
   const seoDescription = String(body?.seoDescription ?? body?.seo?.description ?? '').trim()
