@@ -16,16 +16,6 @@
           <span>{{ item.label }}</span>
         </NuxtLink>
       </nav>
-      <div
-        class="absolute bottom-4 left-4 right-4 flex flex-col gap-2 border-t border-gray-200 pt-4"
-      >
-        <UButton variant="ghost" block to="/" target="_blank" class="h-10 justify-center">
-          На сайт
-        </UButton>
-        <UButton variant="ghost" block color="error" class="h-10 justify-center" @click="logout">
-          Выйти
-        </UButton>
-      </div>
     </aside>
     <main class="admin-main flex-1 overflow-auto p-6">
       <NuxtPage />
@@ -48,11 +38,6 @@ const navItems = [
   { to: '/admin/promotions', label: 'Акции (стр.)', icon: 'i-lucide-gift' },
   { to: '/admin/reviews', label: 'Отзывы', icon: 'i-lucide-star' },
 ]
-
-async function logout() {
-  await $fetch('/api/admin/auth/logout', { method: 'POST' })
-  await navigateTo('/admin/login')
-}
 </script>
 
 <style scoped>

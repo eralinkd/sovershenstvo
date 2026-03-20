@@ -25,12 +25,7 @@
               ? 'bg-blue-100 font-medium text-blue-700'
               : 'text-gray-700 hover:bg-gray-100',
           ]"
-          @click="
-            ;() => {
-              activeTab = 'review'
-              activeIdx = idx
-            }
-          "
+          @click="selectReview(idx)"
         >
           {{ rev.author || `Отзыв ${idx + 1}` }}
           <span v-if="rev.platform" class="block text-xs text-gray-400">{{ rev.platform }}</span>
@@ -193,6 +188,11 @@ watch(
 const currentReview = computed(() =>
   activeTab.value === 'review' ? (form.value.list[activeIdx.value] ?? null) : null,
 )
+
+function selectReview(idx) {
+  activeTab.value = 'review'
+  activeIdx.value = idx
+}
 
 function addReview() {
   form.value.list.push(emptyReview())
