@@ -2,7 +2,7 @@
 import { navigateTo } from 'nuxt/app'
 import { useMain } from '@/composables/content/useMain'
 
-const mainData = await useMain()
+const mainData = useMain()
 </script>
 
 <template>
@@ -11,7 +11,7 @@ const mainData = await useMain()
       <h2 class="details-title" v-html="mainData?.details?.title"></h2>
 
       <div class="block">
-        <img src="/images/details/1.png" alt="Details" />
+        <NuxtImg src="/images/details/1.png" alt="Details" />
         <div class="info">
           <div class="list">
             <div class="item">

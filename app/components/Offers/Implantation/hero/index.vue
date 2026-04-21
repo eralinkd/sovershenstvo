@@ -1,6 +1,11 @@
 <template>
-  <OffersImplantationHeroDesktop v-if="!isMobile" />
-  <OffersImplantationHeroMobile v-else />
+  <ClientOnly>
+    <OffersImplantationHeroDesktop v-if="!isMobile" />
+    <OffersImplantationHeroMobile v-else />
+    <template #fallback>
+      <OffersImplantationHeroDesktop />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>

@@ -1,6 +1,11 @@
 <template>
-  <OffersDentalTreatmentHeroDesktop v-if="!isMobile" />
-  <OffersDentalTreatmentHeroMobile v-else />
+  <ClientOnly>
+    <OffersDentalTreatmentHeroDesktop v-if="!isMobile" />
+    <OffersDentalTreatmentHeroMobile v-else />
+    <template #fallback>
+      <OffersDentalTreatmentHeroDesktop />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>

@@ -5,7 +5,7 @@
       <div class="subtitle">Цена от <span class="bold">45 000 ₽</span></div>
 
       <div class="image-wrap">
-        <img src="/images/page-therapy/page-tooth-decay/hero.png" alt="therapy" />
+        <NuxtImg src="/images/page-therapy/page-tooth-decay/hero.png" alt="therapy" />
       </div>
 
       <div class="info">

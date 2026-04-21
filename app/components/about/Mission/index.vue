@@ -94,7 +94,7 @@
 <script setup>
 import { useAbout } from '@/composables/content/useAbout'
 
-const about = await useAbout()
+const about = useAbout()
 
 function escapeHtml(str) {
   return String(str)

@@ -30,12 +30,28 @@
               на удобное для Вас время
             </div>
             <div class="inputs">
-              <input class="input" type="text" placeholder="Ваше имя:" />
-              <input class="input" type="text" placeholder="Ваш телефон:" />
+              <input
+                v-model="formData.fullName"
+                class="input"
+                type="text"
+                placeholder="Ваше имя:"
+              />
+              <input
+                v-model="formData.phoneNumber"
+                class="input"
+                type="tel"
+                placeholder="Ваш телефон:"
+                @input="handlePhoneInput"
+              />
             </div>
             <div class="controls">
               <div class="consent">
-                <input id="modalm-consent" type="checkbox" class="consent-input" />
+                <input
+                  id="modalm-consent"
+                  v-model="isConsentGiven"
+                  type="checkbox"
+                  class="consent-input"
+                />
                 <label for="modalm-consent" class="consent-label">
                   <span class="consent-box"></span>
                   <span class="consent-text">
@@ -46,10 +62,12 @@
                   </span>
                 </label>
               </div>
-              <button class="controls-btn" @click="handleSubmit">Отправить</button>
+              <button class="controls-btn" :disabled="isSubmitting" @click="handleSubmit">
+                {{ isSubmitting ? 'Отправка...' : 'Отправить' }}
+              </button>
             </div>
           </div>
-          <img src="/images/feedback-modal.png" alt="feedbackModal" class="modal-image" />
+          <NuxtImg src="/images/feedback-modal.png" alt="feedbackModal" class="modal-image" />
         </div>
       </div>
     </Transition>
@@ -90,23 +108,93 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { api } from '@/api'
+
 defineProps({
   isOpen: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['close'])
 const showSuccessNotification = ref(false)
+const isConsentGiven = ref(false)
+const isSubmitting = ref(false)
+
+const formData = ref({
+  fullName: '',
+  phoneNumber: '',
+})
+
+function handlePhoneInput(event) {
+  let value = event.target.value
+  
+  // Удаляем все символы кроме цифр, + и пробелов
+  value = value.replace(/[^\d+\s]/g, '')
+  
+  // Подсчитываем количество символов без пробелов
+  const valueWithoutSpaces = value.replace(/\s/g, '')
+  
+  // Ограничиваем до 12 символов (без учета пробелов) для формата +7XXXXXXXXXX
+  if (valueWithoutSpaces.length > 12) {
+    value = value.slice(0, value.length - (valueWithoutSpaces.length - 12))
+  }
+  
+  // Проверяем, что номер начинается правильно (только +7 или 7 или 8)
+  if (valueWithoutSpaces.length > 0) {
+    const firstChar = valueWithoutSpaces[0]
+    if (firstChar === '8') {
+      // Заменяем 8 на +7
+      value = '+7' + value.slice(1)
+    } else if (firstChar === '7' && valueWithoutSpaces[1] !== undefined) {
+      // Если начинается с 7, добавляем +
+      value = '+' + value
+    } else if (firstChar !== '+' && firstChar !== '7') {
+      // Если начинается не с +, 7 или 8, добавляем +7
+      value = '+7' + value
+    }
+  }
+  
+  formData.value.phoneNumber = value
+}
 
 function handleClose() {
   emit('close')
 }
 
-function handleSubmit() {
-  handleClose()
-  showSuccessNotification.value = true
-  setTimeout(() => {
-    showSuccessNotification.value = false
-  }, 3000)
+async function handleSubmit() {
+  if (!isConsentGiven.value || isSubmitting.value) return
+
+  // Валидация
+  if (!formData.value.fullName.trim() || !formData.value.phoneNumber.trim()) {
+    alert('Пожалуйста, заполните все поля')
+    return
+  }
+
+  isSubmitting.value = true
+
+  try {
+    await api.pushWebsiteQuestionnaire({
+      phoneNumber: formData.value.phoneNumber,
+      fullName: formData.value.fullName,
+    })
+
+    handleClose()
+    showSuccessNotification.value = true
+
+    // Очистка формы
+    formData.value.fullName = ''
+    formData.value.phoneNumber = ''
+    isConsentGiven.value = false
+
+    setTimeout(() => {
+      showSuccessNotification.value = false
+    }, 3000)
+  } catch (error) {
+    console.error('Ошибка отправки формы:', error)
+    alert('Произошла ошибка при отправке. Попробуйте позже.')
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 
@@ -183,6 +271,18 @@ function handleSubmit() {
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.controls-btn:hover:not(:disabled) {
+  background: #0056cc;
+}
+
+.controls-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .consent {

@@ -11,13 +11,13 @@ list:
     link: /offers/implantation
   item3:
     topic: Исправление прикуса
-    text: Установка брекетов и виниров
+    text: 'Установка брекетов '
     price: от 15 000 ₽
     link: /offers/bite-correction
   item4:
-    topic: Установление коронки и протезов
+    topic: Установка коронок и протезов
     text: А также других ортопедических конструкций
-    price: от 12 000 ₽
+    price: от 5 000 ₽
     link: /offers/tooth-restoration
   item5:
     topic: Удаление зуба
@@ -27,5 +27,5 @@ list:
   item6:
     topic: Профессиональная чистка и отбеливание
     text: Эстетические и профилактические процедуры
-    price: от 7 500 ₽
+    price: от 4000 ₽
     link: /offers/tooth-whitening

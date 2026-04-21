@@ -28,7 +28,7 @@
         </div>
 
         <div class="image">
-          <img src="/images/page-therapy/calculation/1.png" alt="calculation" />
+          <NuxtImg src="/images/page-therapy/calculation/1.png" alt="calculation" />
         </div>
       </div>
 

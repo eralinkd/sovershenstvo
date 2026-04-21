@@ -18,7 +18,7 @@
       </div>
 
       <NuxtLink to="/" class="m-header__logo">
-        <img src="/images/header-logo.png" alt="Логотип" />
+        <NuxtImg src="/images/header-logo.png" alt="Логотип" />
       </NuxtLink>
     </div>
 

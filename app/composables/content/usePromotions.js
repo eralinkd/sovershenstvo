@@ -1,21 +1,14 @@
-export const usePromotions = async () => {
-  const { data } = await useAsyncData('promotions', async () => {
-    return queryCollection('promotions').first()
+export const usePromotions = () => {
+  const { data } = useFetch('/api/content/promotions', { key: 'promotions' })
+  return computed(() => {
+    const hero = data.value?.hero ?? {}
+    return {
+      hero: {
+        title: hero.title ?? '',
+        subtitle: hero.subtitle ?? '',
+        items: (hero.items ?? []).map((it) => it?.text).filter(Boolean),
+        img: hero.img ?? '',
+      },
+    }
   })
-
-  const body = data?.value?.meta?.body || {}
-  const hero = body?.hero || {}
-
-  const items = [hero?.items?.item1, hero?.items?.item2, hero?.items?.item3]
-    .map((it) => it?.text)
-    .filter(Boolean)
-
-  return {
-    hero: {
-      title: hero?.title,
-      subtitle: hero?.subtitle,
-      items,
-      img: hero?.img,
-    },
-  }
 }

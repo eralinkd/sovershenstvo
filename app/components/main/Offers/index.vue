@@ -1,6 +1,11 @@
 <template>
-  <MainOffersDesktop v-if="!isMobile" :is-promotions-page="isPromotionsPage" />
-  <MainOffersMobile v-else :is-promotions-page="isPromotionsPage" />
+  <ClientOnly>
+    <MainOffersDesktop v-if="!isMobile" :is-promotions-page="isPromotionsPage" />
+    <MainOffersMobile v-else :is-promotions-page="isPromotionsPage" />
+    <template #fallback>
+      <MainOffersDesktop :is-promotions-page="isPromotionsPage" />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>

@@ -1,4 +1,5 @@
-* {
+/* Reset только для основного сайта (не админки), чтобы не перезаписывать Tailwind */
+.site-content * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;

@@ -2,7 +2,7 @@
   <section class="feedback-form">
     <div class="container">
       <div class="form">
-        <img src="/images/feedback-form.png" alt="feedbackForm" class="form-image" />
+        <NuxtImg src="/images/feedback-form.png" alt="feedbackForm" class="form-image" />
         <h2 class="title">
           Запишитесь на бесплатную <br />
           консультацию прямо сейчас
@@ -12,13 +12,21 @@
           администратор клиники
         </div>
         <div class="inputs">
-          <input class="input" type="text" placeholder="Ваше имя:" />
-          <input class="input" type="text" placeholder="Ваш телефон:" />
+          <input v-model="formData.fullName" class="input" type="text" placeholder="Ваше имя:" />
+          <input
+            v-model="formData.phoneNumber"
+            class="input"
+            type="tel"
+            placeholder="Ваш телефон:"
+            @input="handlePhoneInput"
+          />
         </div>
         <div class="controls">
-          <button class="controls-btn" @click="handleSubmit">Записаться на прием</button>
+          <button class="controls-btn" :disabled="isSubmitting" @click="handleSubmit">
+            {{ isSubmitting ? 'Отправка...' : 'Записаться на прием' }}
+          </button>
           <div class="consent">
-            <input id="consent" type="checkbox" class="consent-input" />
+            <input id="consent" v-model="isConsentGiven" type="checkbox" class="consent-input" />
             <label for="consent" class="consent-label">
               <span class="consent-box"></span>
               <span class="consent-text">
@@ -70,13 +78,83 @@
 </template>
 
 <script setup>
-const showSuccessNotification = ref(false)
+import { ref } from 'vue'
+import { api } from '@/api'
 
-function handleSubmit() {
-  showSuccessNotification.value = true
-  setTimeout(() => {
-    showSuccessNotification.value = false
-  }, 3000)
+const showSuccessNotification = ref(false)
+const isConsentGiven = ref(false)
+const isSubmitting = ref(false)
+
+const formData = ref({
+  fullName: '',
+  phoneNumber: '',
+})
+
+function handlePhoneInput(event) {
+  let value = event.target.value
+  
+  // Удаляем все символы кроме цифр, + и пробелов
+  value = value.replace(/[^\d+\s]/g, '')
+  
+  // Подсчитываем количество символов без пробелов
+  const valueWithoutSpaces = value.replace(/\s/g, '')
+  
+  // Ограничиваем до 12 символов (без учета пробелов) для формата +7XXXXXXXXXX
+  if (valueWithoutSpaces.length > 12) {
+    value = value.slice(0, value.length - (valueWithoutSpaces.length - 12))
+  }
+  
+  // Проверяем, что номер начинается правильно (только +7 или 7 или 8)
+  if (valueWithoutSpaces.length > 0) {
+    const firstChar = valueWithoutSpaces[0]
+    if (firstChar === '8') {
+      // Заменяем 8 на +7
+      value = '+7' + value.slice(1)
+    } else if (firstChar === '7' && valueWithoutSpaces[1] !== undefined) {
+      // Если начинается с 7, добавляем +
+      value = '+' + value
+    } else if (firstChar !== '+' && firstChar !== '7') {
+      // Если начинается не с +, 7 или 8, добавляем +7
+      value = '+7' + value
+    }
+  }
+  
+  formData.value.phoneNumber = value
+}
+
+async function handleSubmit() {
+  if (!isConsentGiven.value || isSubmitting.value) return
+
+  // Валидация
+  if (!formData.value.fullName.trim() || !formData.value.phoneNumber.trim()) {
+    alert('Пожалуйста, заполните все поля')
+    return
+  }
+
+  isSubmitting.value = true
+
+  try {
+    await api.pushWebsiteQuestionnaire({
+      phoneNumber: formData.value.phoneNumber,
+      fullName: formData.value.fullName,
+    })
+
+    showSuccessNotification.value = true
+
+    // Очистка формы
+    formData.value.fullName = ''
+    formData.value.phoneNumber = ''
+    isConsentGiven.value = false
+
+    setTimeout(() => {
+      showSuccessNotification.value = false
+    }, 3000)
+  } catch (error) {
+    console.error('Ошибка отправки формы:', error)
+    alert('Произошла ошибка при отправке. Попробуйте позже.')
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 
@@ -170,8 +248,14 @@ function handleSubmit() {
   transition: background 0.3s;
 }
 
-.controls-btn:hover {
+.controls-btn:hover:not(:disabled) {
   background: #0056cc;
+}
+
+.controls-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .consent {

@@ -57,7 +57,7 @@ defineProps({
   },
 })
 
-const mainData = await useMain()
+const mainData = useMain()
 
 const { open } = useFeedbackModal()
 

@@ -1,6 +1,11 @@
 <template>
-  <OffersToothWhiteningHeroDesktop v-if="!isMobile" />
-  <OffersToothWhiteningHeroMobile v-else />
+  <ClientOnly>
+    <OffersToothWhiteningHeroDesktop v-if="!isMobile" />
+    <OffersToothWhiteningHeroMobile v-else />
+    <template #fallback>
+      <OffersToothWhiteningHeroDesktop />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>

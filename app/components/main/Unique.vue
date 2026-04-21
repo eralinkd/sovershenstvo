@@ -5,7 +5,7 @@
       <p class="unique-subtitle" v-html="mainData?.unique?.subtitle"></p>
       <div class="unique-cards">
         <div class="card">
-          <img src="/images/unique/1.png" alt="Unique" />
+          <NuxtImg src="/images/unique/1.png" alt="Unique" />
           <div class="title">
             <span v-html="mainData?.unique?.card1?.title"></span>
           </div>
@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="card">
-          <img src="/images/unique/2.png" alt="Unique" />
+          <NuxtImg src="/images/unique/2.png" alt="Unique" />
           <div class="title">
             <span v-html="mainData?.unique?.card2?.title"></span>
           </div>
@@ -33,7 +33,7 @@
 <script setup>
 import { useMain } from '@/composables/content/useMain'
 
-const mainData = await useMain()
+const mainData = useMain()
 
 const { open } = useFeedbackModal()
 

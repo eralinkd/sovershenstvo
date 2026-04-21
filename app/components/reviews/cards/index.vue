@@ -42,37 +42,39 @@
 <script setup>
 import UserIcon from './user.vue'
 
-const reviews = await useReviews()
+const reviews = useReviews()
 
-// Build filter options
-const serviceSet = new Map()
-for (const r of reviews) {
-  for (const s of r.services || []) {
-    const key = String(s).toLowerCase()
-    if (!serviceSet.has(key)) serviceSet.set(key, s)
+const products = computed(() => {
+  const serviceSet = new Map()
+  for (const r of reviews.value) {
+    for (const s of r.services || []) {
+      const key = String(s).toLowerCase()
+      if (!serviceSet.has(key)) serviceSet.set(key, s)
+    }
   }
-}
+  return [
+    { value: 'all', label: 'Все услуги' },
+    ...Array.from(serviceSet.values()).map((s) => ({ value: s, label: s })),
+  ]
+})
 
-const products = ref([
-  { value: 'all', label: 'Все услуги' },
-  ...Array.from(serviceSet.values()).map((s) => ({ value: s, label: s })),
-])
-
-const doctorSet = Array.from(new Set(reviews.map((r) => r.doctor))).filter(Boolean)
-const doctors = ref([
-  { value: 'all', label: 'Все врачи' },
-  ...doctorSet.map((d) => ({ value: d, label: d })),
-])
+const doctors = computed(() => {
+  const doctorSet = Array.from(new Set(reviews.value.map((r) => r.doctor))).filter(Boolean)
+  return [
+    { value: 'all', label: 'Все врачи' },
+    ...doctorSet.map((d) => ({ value: d, label: d })),
+  ]
+})
 
 const showMore = ref(false)
-const selectedProduct = ref(products.value[0])
-const selectedDoctor = ref(doctors.value[0])
+const selectedProduct = ref({ value: 'all', label: 'Все услуги' })
+const selectedDoctor = ref({ value: 'all', label: 'Все врачи' })
 
 const filteredReviews = computed(() => {
   const selectedDoctorValue = selectedDoctor.value?.value
   const selectedServiceValue = selectedProduct.value?.value
 
-  return reviews.filter((r) => {
+  return reviews.value.filter((r) => {
     const byDoctor =
       !selectedDoctorValue || selectedDoctorValue === 'all' || r.doctor === selectedDoctorValue
 

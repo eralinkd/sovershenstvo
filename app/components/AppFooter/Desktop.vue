@@ -74,7 +74,7 @@
           <div class="line"></div>
           <div class="nav">
             <div>
-              <img src="/images/footer-logo.png" alt="nav" />
+              <NuxtImg src="/images/footer-logo.png" alt="nav" />
             </div>
             <div class="links">
               <NuxtLink to="/">Главная</NuxtLink>
@@ -97,7 +97,7 @@
           </div>
         </div>
         <div class="map">
-          <img src="/images/footer-map.png" alt="map" />
+          <NuxtImg src="/images/footer-map.png" alt="map" />
         </div>
       </footer>
     </div>
@@ -114,10 +114,10 @@ function openFeedbackModal() {
   open()
 }
 
-const footer = await useFooter()
-const summaryPhonesString = computed(() => footer.summaryPhones || '')
+const footer = useFooter()
+const summaryPhonesString = computed(() => footer.value?.summaryPhones || '')
 const currentIndex = computed(() => Math.max(0, (selectedAddress.value || 1) - 1))
-const currentAddress = computed(() => (footer.addresses || [])[currentIndex.value] || {})
+const currentAddress = computed(() => (footer.value?.addresses || [])[currentIndex.value] || {})
 const currentPhones = computed(() => {
   const phones = currentAddress.value.phones
   return Array.isArray(phones) ? phones.filter(Boolean) : []

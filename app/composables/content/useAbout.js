@@ -1,32 +1,22 @@
-export const useAbout = async () => {
-  const { data } = await useAsyncData('about', async () => {
-    return queryCollection('about').first()
-  })
+const DEFAULT_ABOUT = {
+  title: '',
+  hero: {
+    quote: '',
+    quoteAuthor: '',
+    topImage: '',
+    bottomText: '',
+    ctaText: '',
+    stats: { first: '', second: '', third: '' },
+    statsLabels: { first: '', second: '', third: '' },
+  },
+  mission: {
+    title: '',
+    subtitle: '',
+    blocks: [],
+  },
+}
 
-  const body = data?.value?.meta?.body || {}
-
-  const hero = body?.hero || {}
-
-  const result = {
-    hero: {
-      quote: hero?.quote,
-      quoteAuthor: hero?.quoteAuthor,
-      topImage: hero?.topImage,
-      bottomText: hero?.bottomText,
-      stats: {
-        first: hero?.stats?.first,
-        second: hero?.stats?.second,
-        third: hero?.stats?.third,
-      },
-      statsLabels: {
-        first: hero?.statsLabels?.first,
-        second: hero?.statsLabels?.second,
-        third: hero?.statsLabels?.third,
-      },
-      ctaText: hero?.ctaText,
-    },
-    mission: body?.mission || {},
-  }
-
-  return result
+export const useAbout = () => {
+  const { data } = useFetch('/api/content/about', { key: 'about' })
+  return computed(() => data.value ?? DEFAULT_ABOUT)
 }

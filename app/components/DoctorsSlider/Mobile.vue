@@ -85,8 +85,8 @@ import { useDoctors } from '@/composables/content/useDoctors'
 const modules = [Keyboard, Mousewheel, FreeMode]
 let swiperInstance = null
 
-const doctorsData = await useDoctors()
-const activeDoctors = doctorsData?.slider?.doctors || []
+const doctorsData = useDoctors()
+const activeDoctors = computed(() => doctorsData.value?.slider?.doctors || [])
 
 function onSwiper(instance) {
   swiperInstance = instance

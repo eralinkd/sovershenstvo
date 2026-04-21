@@ -31,7 +31,7 @@
           <button class="therapy-btn" @click="openFeedbackModal">Записаться на прием</button>
         </div>
         <div class="img">
-          <img src="/images/page-therapy/page-tooth-decay/hero.png" alt="therapy" />
+          <NuxtImg src="/images/page-therapy/page-tooth-decay/hero.png" alt="therapy" />
         </div>
       </div>
     </div>

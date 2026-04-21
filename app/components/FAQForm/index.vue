@@ -1,11 +1,14 @@
 <template>
-  <FAQFormDesktop v-if="!isMobile" :faqs="props.faqs" :title="props.title" />
-  <FAQFormMobile v-else :faqs="props.faqs" :title="props.title" />
+  <ClientOnly>
+    <FAQFormDesktop v-if="!isMobile" :faqs="props.faqs" :title="props.title" />
+    <FAQFormMobile v-else :faqs="props.faqs" :title="props.title" />
+    <template #fallback>
+      <FAQFormDesktop :faqs="props.faqs" :title="props.title" />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>
-const isMobile = ref(false)
-
 const props = defineProps({
   faqs: {
     type: Array,
@@ -16,6 +19,8 @@ const props = defineProps({
     default: 'Часто задаваемые <br />вопросы о лечении зубов',
   },
 })
+
+const isMobile = ref(false)
 
 onMounted(() => {
   const mq = window.matchMedia('(max-width: 991px)')

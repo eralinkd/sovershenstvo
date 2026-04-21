@@ -1,6 +1,11 @@
 <template>
-  <AppFooterDesktop v-if="!isMobile" />
-  <AppFooterMobile v-else />
+  <ClientOnly>
+    <AppFooterDesktop v-if="!isMobile" />
+    <AppFooterMobile v-else />
+    <template #fallback>
+      <AppFooterDesktop />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>

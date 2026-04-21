@@ -4,7 +4,7 @@
       <h2 class="details-title" v-html="mainData?.details?.title"></h2>
 
       <div class="hero-card">
-        <img src="/images/details/1.png" alt="Совершенство — ваша стоматология" />
+        <NuxtImg src="/images/details/1.png" alt="Совершенство — ваша стоматология" />
       </div>
 
       <div class="stats">
@@ -38,7 +38,7 @@
 <script setup>
 import { useMain } from '@/composables/content/useMain'
 
-const mainData = await useMain()
+const mainData = useMain()
 </script>
 
 <style scoped>

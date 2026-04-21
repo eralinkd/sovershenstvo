@@ -37,7 +37,7 @@ function openFeedbackModal() {
   open()
 }
 
-const promo = await usePromotions()
+const promo = usePromotions()
 
 function escapeHtml(str) {
   return String(str)
