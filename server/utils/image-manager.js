@@ -2,7 +2,19 @@ import { readdir, stat, mkdir, rename as fsRename, unlink, writeFile } from 'nod
 import { existsSync } from 'node:fs'
 import path from 'node:path'
 
-export const IMAGES_ROOT = path.join(process.cwd(), 'public', 'images')
+/**
+ * В production Nitro отдаёт статику из `.output/public`, а не из корневого `public/`.
+ * Запись новых файлов только в `public/images` приводит к 404 на URL `/images/...`.
+ */
+function resolveImagesRoot() {
+  const cwd = process.cwd()
+  if (process.env.NODE_ENV === 'production') {
+    return path.join(cwd, '.output', 'public', 'images')
+  }
+  return path.join(cwd, 'public', 'images')
+}
+
+export const IMAGES_ROOT = resolveImagesRoot()
 
 export function toImageUrl(relativePath) {
   return '/images/' + relativePath.replace(/\\/g, '/')
